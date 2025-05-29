@@ -5,9 +5,9 @@ from PIL import Image
 
 
 
-url = "https://be67-34-87-115-68.ngrok-free.app/extract"
+url = "https://ed81-34-87-115-68.ngrok-free.app/extract"
 main_folder = "D:\\Code\\Python\\Project\\Recognition_Card_Id\\save_infor"
-file_path = 'driver_license_2.jpg'
+file_path = 'cccd_6.jpg'
 document_types = {
     "id_card": [],
     "driver_license": [],
@@ -67,6 +67,22 @@ def inference():
     return None, None
 
 
+def save_to_database(doc_type, data, image_path):
+    with open(image_path, 'rb') as img_file:
+        files = {'image': img_file}
+        payload = {
+            'name': data.get('name', ''),
+            'doc_type': doc_type,
+            'text_content': json.dumps(data, ensure_ascii=False)
+        }
+
+        response = requests.post("http://127.0.0.1:5000/add_document", files=files, data=payload)
+
+        if response.status_code == 200:
+            print("✅ Đã lưu vào database.")
+        else:
+            print("❌ Lỗi khi lưu vào database:", response.text)
+
 def process_name_dob(name,dob) :
     name_ = name.lower().replace(" ", "_")
     dob_ =  dob.replace('/', "_").strip()
@@ -83,6 +99,7 @@ def app_run():
         print("❌ Không thể trích xuất thông tin.")
         return
     doc_type, data = result
+    save_to_database(doc_type, data, file_path)
     image = Image.open(file_path)
     path_ = os.path.join(main_folder, doc_type)
     folder_images = os.path.join(path_, 'images')
