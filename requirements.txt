@@ -1,0 +1,7 @@
+pip install transformers accelerate
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install flask
+pip install pyngrok
+pip install requests
+pip uninstall sympy -y
+pip install sympy==1.12
