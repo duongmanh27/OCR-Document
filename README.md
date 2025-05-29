@@ -20,5 +20,5 @@ Then :<br>
     ```
     !ngrok config add-authtoken 22P1jNxxxxxxxxxxxxxxx
     ```
-  - And run run_on_gg_colab.py in this<br>
+  - And run run_on_gg_colab.py in this.<br>
 After you run the app.py and run_local.py file on your computer and change the image path<br>
